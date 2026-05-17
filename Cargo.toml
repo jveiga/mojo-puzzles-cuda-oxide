@@ -1,0 +1,21 @@
+[package]
+name = "mojo-puzzles"
+version = "0.1.0"
+edition = "2024"
+
+[workspace]
+
+[lints]
+workspace = true
+
+[workspace.lints.clippy]
+pedantic = "deny"
+
+[[bin]]
+name ="map"
+
+[dependencies]
+cuda-device = { git = "https://github.com/NVlabs/cuda-oxide.git" }
+cuda-host = { git = "https://github.com/NVlabs/cuda-oxide.git" }
+cuda-core = { git = "https://github.com/NVlabs/cuda-oxide.git" }
+anyhow = "1.0.102"

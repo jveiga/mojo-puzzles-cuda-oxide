@@ -1,0 +1,31 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.17.2/.schema/devbox.schema.json",
+  "packages": [
+    "rustup@latest",
+    "gcc@latest",
+    "llvmPackages_21.libclang",
+    "cudaPackages.cudatoolkit@12"
+  ],
+  "env": {
+    "LIBCLANG_PATH": "${DEVBOX_PROFILE_DIR}/lib",
+    "LD_LIBRARY_PATH": "${DEVBOX_PROFILE_DIR}/lib"
+  },
+  "shell": {
+    "init_hook": [
+      "export BINDGEN_EXTRA_CLANG_ARGS=\"-I$CUDA_INCLUDE_DIR\"",
+      "export CPATH=\"$CUDA_INCLUDE_DIR:${CPATH:-}\"",
+      "export CUDA_INCLUDE_DIR=\"$DEVBOX_PROFILE_DIR/include\"",
+      "export LD_LIBRARY_PATH=\"$DEVBOX_PROFILE_DIR/lib:$SYSTEM_CUDA_LDFLAGS:${LD_LIBRARY_PATH:-}\"",
+      "export LIBRARY_PATH=\"$DEVBOX_PROFILE_DIR/lib:$SYSTEM_CUDA_LDFLAGS:${LIBRARY_PATH:-}\"",
+      "export NIX_CFLAGS_COMPILE=\"-I$CUDA_INCLUDE_DIR ${NIX_CFLAGS_COMPILE:-}\"",
+      "export NIX_LDFLAGS=\"$SYSTEM_CUDA_LDFLAGS ${NIX_LDFLAGS:-}\"",
+      "export SYSTEM_CUDA_LDFLAGS=\"-L/usr/lib/x86_64-linux-gnu -L/usr/lib64 -L/usr/lib/w32-brand\""
+    ],
+    "scripts": {
+      "test": "cargo test",
+      "broadcast": "cargo oxide run --bin broadcast",
+      "clippy": "cargo clippy"
+
+    }
+  }
+}
